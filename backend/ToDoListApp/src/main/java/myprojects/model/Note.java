@@ -1,7 +1,11 @@
 package myprojects.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +24,15 @@ public class Note {
 	@Column(length = 5000)
 	private String description; 
 	
+	private LocalDate deadline; 
+	
 	private boolean isFinished;
-
+	
+	private LocalDate completionDate; 
+	
+	@Enumerated(EnumType.STRING)
+	private EPriority priority;
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,5 +60,30 @@ public class Note {
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
+
+	public LocalDate getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
+
+	public LocalDate getCompletionDate() {
+		return completionDate;
+	}
+
+	public void setCompletionDate(LocalDate completionDate) {
+		this.completionDate = completionDate;
+	}
+
+	public EPriority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(EPriority priority) {
+		this.priority = priority;
+	}
+	
 	
 }

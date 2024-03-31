@@ -1,0 +1,81 @@
+/* General leyout */
+
+.header {
+    background-color: #FFF0F5;
+    padding: 2%;
+    margin: 5%;
+    margin-top: 2%;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+.header h1 {
+    font-family: Arial, sans-serif;
+    font-size: 2rem;
+    margin: 0;
+    padding: 5px;
+    color: #333;
+  }
+
+.app {
+    padding: 5px;
+    margin: 5%;
+    width: 90%; 
+}
+
+/* Notes */
+
+.table-wrapper {
+  max-width: 90%;
+  margin: auto; 
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden; 
+}
+
+.table-all-notes {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-all-notes th {
+    background-color: #00CED1; 
+    font-family: 'Roboto', sans-serif; 
+    font-weight: bold; 
+    padding: 10px; 
+    text-align: center; 
+}
+
+.table-all-notes td {
+    font-family: 'Roboto', sans-serif; 
+    padding: 10px; 
+    text-align: center; 
+}
+
+.checkbox-column {
+    width: 50px; 
+}
+
+.title-column {
+    width: auto;
+}
+
+.priority-column {
+    width: 100px; 
+}
+
+.deadline-column {
+    width: 100px; 
+    text-align: center; 
+}
+
+.icon-column {
+    width: 40px; 
+    text-align: center; 
+}
+
+
+.icon-column svg {
+    font-size: 1.2rem; 
+    margin: 0 5px; 
+}

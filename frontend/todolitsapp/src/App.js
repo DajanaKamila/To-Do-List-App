@@ -1,8 +1,5 @@
-
-// import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import DataCheck from './components/DataCheck';
 import NotesList from './components/NotesList';
 import Layout from './components/layout/Layout';
 

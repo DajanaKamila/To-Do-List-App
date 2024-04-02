@@ -2,8 +2,9 @@
 
 .header {
     background-color: #FFF0F5;
-    padding: 2%;
-    margin: 5%;
+    padding: 10px;
+    margin-right: 5%;
+    margin-left: 5%;
     margin-top: 2%;
     text-align: center;
     border-radius: 10px;
@@ -13,17 +14,19 @@
     font-family: Arial, sans-serif;
     font-size: 2rem;
     margin: 0;
-    padding: 5px;
+    padding: 2px;
     color: #333;
   }
 
-.app {
-    padding: 5px;
-    margin: 5%;
+.app-body {
+    margin-top: 2%;
+    padding: 1px;
+    margin-left: 5%;
+    margin-right: 5%;
     width: 90%; 
 }
 
-/* Notes */
+/* Notes list*/
 
 .table-wrapper {
   max-width: 90%;
@@ -49,23 +52,25 @@
 .table-all-notes td {
     font-family: 'Roboto', sans-serif; 
     padding: 10px; 
-    text-align: center; 
 }
 
 .checkbox-column {
     width: 50px; 
+    text-align: center; 
 }
 
 .title-column {
     width: auto;
+    text-align: left; 
 }
 
 .priority-column {
-    width: 100px; 
+    width: 130px; 
+    text-align: center; 
 }
 
 .deadline-column {
-    width: 100px; 
+    width: 130px; 
     text-align: center; 
 }
 
@@ -83,3 +88,29 @@
 .trash-icon {
     cursor: pointer; 
 }
+
+/* Notes Page */
+
+.sub-nav-container {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 10px; 
+    margin-bottom: 20px; 
+} 
+
+.btn-custom {
+        min-width: 180px;
+        max-height: 40px;
+        background-color: #FFB6C1 !important;
+        font-weight: bold !important; 
+        border-color: #FFB6C1 !important;
+        color: #333 !important;
+}
+
+.btn-custom:hover{
+    background-color: #ffe6ea !important;
+    border-color: #ffe6ea !important;
+}
+

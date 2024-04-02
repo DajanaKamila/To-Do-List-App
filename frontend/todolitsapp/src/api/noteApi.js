@@ -24,9 +24,14 @@ export const noteApi = apiSlice.injectEndpoints({
             }),
             providesTags: ["notes"],
         }),
-
-
-
+        addNewNote: builder.mutation({
+            query: (note) => ({
+                url: `/notes/`,
+                method: 'POST',
+                body: note
+            }),
+            providesTags: ["notes"],
+        }),
     })
 
 
@@ -36,7 +41,7 @@ export const {
     useGetAllNotesQuery,
     useGetNoteByIdQuery,
     useDeleteNoteByIdMutation,
-    // useAddNewNoteMutation,
+    useAddNewNoteMutation,
     // useUpdateNoteMutation,
 
 } = noteApi

@@ -14,64 +14,64 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import myprojects.model.Note;
-import myprojects.service.NoteService;
+import myprojects.model.Task;
+import myprojects.service.TaskService;
 
 
 @RestController
-@RequestMapping("api/v1/notes")
-public class NoteController {
+@RequestMapping("api/v1/tasks")
+public class TaskController {
 	
 	@Autowired
-	private NoteService noteService; 
+	private TaskService taskService; 
 	
-	public NoteController(NoteService noteService) {
+	public TaskController(TaskService taskService) {
 		super();
-		this.noteService = noteService;
+		this.taskService = taskService;
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<?> save(@RequestBody Note note) {
-		return new ResponseEntity<>(this.noteService.save(note), HttpStatus.CREATED);
+	public ResponseEntity<?> save(@RequestBody Task task) {
+		return new ResponseEntity<>(this.taskService.save(task), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/")
 	public ResponseEntity<?> getAll() {
-		List<Note> notes = this.noteService.getAll();
-		if (notes == null) {
+		List<Task> tasks = this.taskService.getAll();
+		if (tasks == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}	
-		return new ResponseEntity<>(notes, HttpStatus.OK);
+		return new ResponseEntity<>(tasks, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
-		Note noteDB = noteService.getById(id);
-		if (noteDB == null) {
+		Task taskDB = taskService.getById(id);
+		if (taskDB == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}	
-		return new ResponseEntity<>(noteDB, HttpStatus.OK);
+		return new ResponseEntity<>(taskDB, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Long id) {
-		Note noteDB = noteService.getById(id);
-		if (noteDB == null) {
+		Task taskDB = taskService.getById(id);
+		if (taskDB == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}	
-		noteService.deleteById(id);
-		return new ResponseEntity<>(noteDB, HttpStatus.OK);
+		taskService.deleteById(id);
+		return new ResponseEntity<>(taskDB, HttpStatus.OK);
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<?> updateNote(@RequestBody Note note) {
-		Note noteDB = this.noteService.getById(note.getId());
+	public ResponseEntity<?> updateById(@RequestBody Task task) {
+		Task taskDB = this.taskService.getById(task.getId());
 
-		if (noteDB == null) {
+		if (taskDB == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(this.noteService.updateNote(note), HttpStatus.OK);
-	}
+		return new ResponseEntity<>(this.taskService.updateById(task), HttpStatus.OK);
+	} 
 	
 }
 

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import NotesPage from './components/NotesPage';
+import TasksPage from './components/TasksPage';
 import Layout from './components/layout/Layout';
 import { ToastContainer } from 'react-toastify';
 
@@ -9,7 +9,7 @@ function App() {
     <div className="app">
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<NotesPage />}></Route>
+        <Route index element={<TasksPage />}></Route>
       </Route>
     </Routes>
       {/* <ToastContainer

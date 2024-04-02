@@ -1,11 +1,11 @@
 import React from 'react';
 import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
 
-const NotesList = ({notes, toggleDeleteNotePopup, allNotesSuccess}) => {
+const TasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess}) => {
 
   return (
     <div className="table-wrapper">
-        <table className="table-all-notes">
+        <table className="table-all-tasks">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -17,19 +17,19 @@ const NotesList = ({notes, toggleDeleteNotePopup, allNotesSuccess}) => {
                 </tr>
             </thead>
             <tbody>
-                {allNotesSuccess && notes.map((note) => (
-                    <tr key={note.id}>
+                {allTasksSuccess && tasks.map((task) => (
+                    <tr key={task.id}>
                         <td className="checkbox-column">
                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
                         </td>
-                        <td className="title-column">{note.title}</td>
-                        <td className="priority-column">{note.priority}</td>
-                        <td className='deadline-column'>{note.deadline}</td>
+                        <td className="title-column">{task.title}</td>
+                        <td className="priority-column">{task.priority}</td>
+                        <td className='deadline-column'>{task.deadline}</td>
                         <td className='icon-column'>
-                                <BsFillPencilFill />
+                            <BsFillPencilFill />
                         </td>
                         <td className='icon-column'>
-                        <div className="trash-icon" onClick={() => toggleDeleteNotePopup(note.id)}>
+                        <div className="trash-icon" onClick={() => toggleDeleteTaskPopup(task.id)}>
                             <BsFillTrash3Fill />
                         </div>                           
                         </td>
@@ -41,4 +41,4 @@ const NotesList = ({notes, toggleDeleteNotePopup, allNotesSuccess}) => {
   );
 }
 
-export default NotesList
+export default TasksList;

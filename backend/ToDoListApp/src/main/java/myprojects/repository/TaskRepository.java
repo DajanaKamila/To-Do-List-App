@@ -2,8 +2,8 @@ package myprojects.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import myprojects.model.Note;
+import myprojects.model.Task;
 
-public interface NoteRepository extends JpaRepository<Note, Long>{
+public interface TaskRepository extends JpaRepository<Task, Long>{
 
 }

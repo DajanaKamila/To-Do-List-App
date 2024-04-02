@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import  { useAddNewNoteMutation } from '../api/noteApi';
-import { useDispatch } from 'react-redux';
+import  { useAddNewTaskMutation } from '../api/taskApi';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 // import { toast } from "react-toastify";
 import { useGetAllPrioritiesQuery } from '../api/priorityApi'; 
 
-const AddNewNotePopup = ({onClose, refetch}) => {
+const AddNewTaskPopup = ({onClose, refetch}) => {
     const showModal = true;
-    const [addNewNote] = useAddNewNoteMutation() || {};
+    const [addNewTask] = useAddNewTaskMutation() || {};
     const { data: priorities, isSuccess: prioritySuccess, isLoading: priorityLoading, isError: priorityError } = useGetAllPrioritiesQuery(); 
 
     const [title, setTitle] = useState('');
@@ -30,25 +29,25 @@ const AddNewNotePopup = ({onClose, refetch}) => {
         return Object.keys(errors).length === 0;
     };
 
-    const handleAddNote = async () => {
+    const handleAddTask = async () => {
         try {
 
           if (!validateForm()) {
             return;
           }
 
-          const newNote = {
+          const newTask = {
             title: title,
             details: details,
             priority: priority,
             deadline: deadline,
           };
-          const response = await addNewNote(newNote).unwrap();
-          // toast.success("Note added successfully!");
+          const response = await addNewTask(newTask).unwrap();
+          // toast.success("Task added successfully!");
           refetch();
           onClose();
         } catch (error) {
-          console.error('Error adding note: ', error);
+          console.error('Error adding task: ', error);
           // toast.error("Upss! Something went wrong. " + error);
         }
       };
@@ -59,7 +58,7 @@ const AddNewNotePopup = ({onClose, refetch}) => {
         
         <Modal.Header closeButton>
             <Modal.Title>
-                Add new note
+                Add new task
             </Modal.Title>
         </Modal.Header>
 
@@ -123,8 +122,8 @@ const AddNewNotePopup = ({onClose, refetch}) => {
         </Modal.Body>
 
         <Modal.Footer>
-            <Button className="btn btn-custom" onClick={handleAddNote}>
-                Add Note
+            <Button className="btn btn-custom" onClick={handleAddTask}>
+                Add Task
             </Button>
         </Modal.Footer>
     </Modal>
@@ -134,4 +133,4 @@ const AddNewNotePopup = ({onClose, refetch}) => {
 }
 
 
-export default AddNewNotePopup
+export default AddNewTaskPopup

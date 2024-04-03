@@ -1,4 +1,26 @@
 import { apiSlice } from "./apiSlice";
+import { createEntityAdapter } from "@reduxjs/toolkit";
+
+// const finishedTasksAdapter = createEntityAdapter({
+//     sortComparer: (a, b) => b.completionDate.localeCompare(a.completionDate)
+// })
+
+
+// const finishedTasksAdapter = createEntityAdapter({
+//     sortComparer: (a, b) => {
+//         if (!a.completionDate && !b.completionDate) {
+//             return 0;
+//         } else if (!a.completionDate) {
+//             return 1;
+//         } else if (!b.completionDate) {
+//             return -1; 
+//         } else {
+//             return b.completionDate.localeCompare(a.completionDate);
+//         }
+//     }
+// });
+
+// const initialState = finishedTasksAdapter.getInitialState();
 
 export const taskApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -8,6 +30,9 @@ export const taskApi = apiSlice.injectEndpoints({
                 url: `/tasks/`,
                 method: 'GET'
             }),
+            // transformResponse: responseData => {
+            //     return finishedTasksAdapter.setAll(responseData);
+            // },
             providesTags: ["tasks"],
         }),
         getTaskById: builder.query({

@@ -4,6 +4,7 @@ import AddNewTaskPopup from './AddNewTaskPopup';
 import { useGetAllTasksQuery } from '../api/taskApi';
 import TasksList from './TasksList';
 import TasksGrid from './TasksGrid';
+import FinishedTasksList from './FinishedTasksList';
 
 
 const TasksPage = () => {
@@ -13,6 +14,8 @@ const TasksPage = () => {
     const [isChecked, setIsChecked] = useState(false);
 
     const {data: tasks, isSuccess: allTasksSuccess, refetch: refetchAllTasks} = useGetAllTasksQuery() || [];
+
+    console.log("Tasks: " + JSON.stringify(tasks))
 
     const toggleDeleteTaskPopup = (id) => {
         setTaskToDeleteId(id);
@@ -27,7 +30,11 @@ const TasksPage = () => {
         setIsChecked(e.target.checked);
     };
 
-    // const toDoTasks = tasks.filter(task => !task.isFinished);
+    const toDoTasks = tasks && tasks.filter(task => !task.finished);
+    const finishedTasks = tasks && tasks.filter(task => task.finished);
+
+    const filteredAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
+
 
   return (
     <div className="tasks-page">
@@ -48,11 +55,20 @@ const TasksPage = () => {
 
         {isChecked ? <TasksGrid/>
             :   <TasksList
-                    tasks={tasks}
+                    tasks={toDoTasks}
                     toggleDeleteTaskPopup={toggleDeleteTaskPopup}
                     allTasksSuccess={allTasksSuccess}
                 />
+                
         }
+
+        <div className="gap"/>
+
+        <FinishedTasksList 
+            tasks={filteredAndSortedTasks }
+            toggleDeleteTaskPopup={toggleDeleteTaskPopup}
+            allTasksSuccess={allTasksSuccess}
+        />
 
 
         {showDeleteTaskPopup && (
@@ -68,6 +84,8 @@ const TasksPage = () => {
                 refetch={refetchAllTasks}
             />
         )}
+
+
 
     </div>
   )

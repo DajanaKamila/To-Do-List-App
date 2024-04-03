@@ -15,8 +15,6 @@ const TasksPage = () => {
 
     const {data: tasks, isSuccess: allTasksSuccess, refetch: refetchAllTasks} = useGetAllTasksQuery() || [];
 
-    console.log("Tasks: " + JSON.stringify(tasks))
-
     const toggleDeleteTaskPopup = (id) => {
         setTaskToDeleteId(id);
         setShowDeleteTaskPopup(!showDeleteTaskPopup);
@@ -31,9 +29,7 @@ const TasksPage = () => {
     };
 
     const toDoTasks = tasks && tasks.filter(task => !task.finished);
-    const finishedTasks = tasks && tasks.filter(task => task.finished);
-
-    const filteredAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
+    const finishedAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
 
 
   return (
@@ -47,7 +43,7 @@ const TasksPage = () => {
                             id="flexCheckDefault" 
                             checked={isChecked} 
                             onChange={handleCheckboxChange} />
-                    <label className="form-check-label" for="flexCheckDefault">
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
                         Grid view
                     </label>
                 </div>
@@ -65,7 +61,7 @@ const TasksPage = () => {
         <div className="gap"/>
 
         <FinishedTasksList 
-            tasks={filteredAndSortedTasks }
+            tasks={finishedAndSortedTasks }
             toggleDeleteTaskPopup={toggleDeleteTaskPopup}
             allTasksSuccess={allTasksSuccess}
         />

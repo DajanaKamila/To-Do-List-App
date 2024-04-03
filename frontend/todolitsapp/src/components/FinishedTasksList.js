@@ -20,7 +20,7 @@ const FinishedTasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess}) => {
                 {allTasksSuccess && tasks.map((task) => (
                     <tr key={task.id}>
                         <td className="checkbox-column">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked/>
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" defaultChecked/>
                         </td>
                         <td className="title-column" style={{ textDecoration: 'line-through', color: '#808080' }}>{task.title}</td>
                         <td className="priority-column">{task.priority}</td>

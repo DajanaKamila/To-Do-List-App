@@ -9,7 +9,7 @@ import { useGetAllPrioritiesQuery } from '../api/priorityApi';
 const AddNewTaskPopup = ({onClose, refetch}) => {
     const showModal = true;
     const [addNewTask] = useAddNewTaskMutation() || {};
-    const { data: priorities, isSuccess: prioritySuccess, isLoading: priorityLoading, isError: priorityError } = useGetAllPrioritiesQuery(); 
+    const { data: priorities, isSuccess: prioritySuccess} = useGetAllPrioritiesQuery(); 
 
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
@@ -42,7 +42,8 @@ const AddNewTaskPopup = ({onClose, refetch}) => {
             priority: priority,
             deadline: deadline,
           };
-          const response = await addNewTask(newTask).unwrap();
+          // const response = await addNewTask(newTask).unwrap();
+          await addNewTask(newTask).unwrap();
           // toast.success("Task added successfully!");
           refetch();
           onClose();

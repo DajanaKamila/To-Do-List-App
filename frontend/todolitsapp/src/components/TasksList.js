@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
 
-const TasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess}) => {
+const TasksList = ({tasks, toggleDeleteTaskPopup, toggleEditTaskPopup, allTasksSuccess}) => {
 
   return (
     <div className="table-wrapper">
@@ -25,13 +25,11 @@ const TasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess}) => {
                         <td className="title-column">{task.title}</td>
                         <td className="priority-column">{task.priority}</td>
                         <td className='deadline-column'>{task.deadline}</td>
-                        <td className='icon-column'>
+                        <td className='icon-column' onClick={() => toggleEditTaskPopup(task)}>
                             <BsFillPencilFill />
                         </td>
-                        <td className='icon-column'>
-                        <div className="trash-icon" onClick={() => toggleDeleteTaskPopup(task.id)}>
-                            <BsFillTrash3Fill />
-                        </div>                           
+                        <td className='icon-column' onClick={() => toggleDeleteTaskPopup(task.id)}>
+                            <BsFillTrash3Fill />                       
                         </td>
                     </tr>
                 ))}

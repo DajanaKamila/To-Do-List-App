@@ -32,6 +32,14 @@ export const taskApi = apiSlice.injectEndpoints({
             }),
             providesTags: ["tasks"],
         }),
+        updateTask: builder.mutation({
+            query: (note) => ({
+                url: `/tasks/`,
+                method: 'PUT',
+                body: note
+            }),
+            providesTags: ["tasks"],
+        }),
     })
 
 
@@ -42,6 +50,5 @@ export const {
     useGetTaskByIdQuery,
     useDeleteTaskByIdMutation,
     useAddNewTaskMutation,
-    // useUpdateNoteMutation,
-
-} = taskApi
+    useUpdateTaskMutation,
+} = taskApi;

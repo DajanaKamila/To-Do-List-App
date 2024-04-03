@@ -77,16 +77,13 @@
 .icon-column {
     width: 40px; 
     text-align: center; 
+    cursor: pointer; 
 }
 
 
 .icon-column svg {
     font-size: 1.2rem; 
     margin: 0 5px; 
-}
-
-.trash-icon {
-    cursor: pointer; 
 }
 
 /* Tasks Page */

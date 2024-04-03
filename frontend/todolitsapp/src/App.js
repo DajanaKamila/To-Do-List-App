@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
-import TasksPage from './components/TasksPage';
+import TasksPage from './components/full-pages/TasksPage';
 import Layout from './components/layout/Layout';
 // import { ToastContainer } from 'react-toastify';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useDeleteTaskByIdMutation } from '../api/taskApi';
+import { useDeleteTaskByIdMutation } from '../../api/taskApi';
 
 const DeleteTaskPopup = ({taskId, onClose, refetch}) => {
     const showModal = true;

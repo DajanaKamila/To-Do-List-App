@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import  { useAddNewTaskMutation } from '../api/taskApi';
+import  { useAddNewTaskMutation, useUpdateTaskMutation } from '../../api/taskApi';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 // import { toast } from "react-toastify";
-import { useGetAllPrioritiesQuery } from '../api/priorityApi'; 
+import { useGetAllPrioritiesQuery } from '../../api/priorityApi'; 
 
-const AddNewTaskPopup = ({onClose, refetch}) => {
+const AddEditTaskPopup = ({onClose, refetch, isEditMode, taskToEdit }) => {
     const showModal = true;
     const [addNewTask] = useAddNewTaskMutation() || {};
-    const { data: priorities, isSuccess: prioritySuccess} = useGetAllPrioritiesQuery(); 
+    const [editTask] = useUpdateTaskMutation() || {};
+    const { data: priorities, isSuccess: prioritySuccess} = useGetAllPrioritiesQuery();
 
-    const [title, setTitle] = useState('');
-    const [details, setDetails] = useState('');
-    const [priority, setPriority] = useState('');
-    const [deadline, setDeadline] = useState('');
+    const [title, setTitle] = useState(isEditMode ? taskToEdit.title : '');
+    const [details, setDetails] = useState(isEditMode ? taskToEdit.description : ' ');
+    const [priority, setPriority] = useState(isEditMode ? taskToEdit.priority : ' ');
+    const [deadline, setDeadline] = useState(isEditMode ? taskToEdit.deadline : ' ');
     const [errors, setErrors] = useState({});
 
     const validateForm = () => {
@@ -38,13 +39,20 @@ const AddNewTaskPopup = ({onClose, refetch}) => {
 
           const newTask = {
             title: title,
-            details: details,
+            description: details,
             priority: priority,
             deadline: deadline,
           };
+
+          if ( isEditMode ) {
+            newTask.id = taskToEdit.id
+
+            await editTask(newTask).unwrap();
+          } else {
           // const response = await addNewTask(newTask).unwrap();
           await addNewTask(newTask).unwrap();
           // toast.success("Task added successfully!");
+          }
           refetch();
           onClose();
         } catch (error) {
@@ -59,7 +67,7 @@ const AddNewTaskPopup = ({onClose, refetch}) => {
         
         <Modal.Header closeButton>
             <Modal.Title>
-                Add new task
+                {isEditMode ? "Edit task" : "Add new task"}
             </Modal.Title>
         </Modal.Header>
 
@@ -100,10 +108,10 @@ const AddNewTaskPopup = ({onClose, refetch}) => {
                     required
                     isInvalid={errors.priority}  
                 >
-                    <option value="">Select priority</option>
+                    <option key='' value=''>Select priority</option>
 
                     {priorities.map((priorityOption) => (
-                    <option key={priorityOption.id} value={priorityOption}>
+                    <option key={priorityOption} value={priorityOption}>
                         {priorityOption}
                     </option>
                     ))} 
@@ -124,7 +132,7 @@ const AddNewTaskPopup = ({onClose, refetch}) => {
 
         <Modal.Footer>
             <Button className="btn btn-custom" onClick={handleAddTask}>
-                Add Task
+                {isEditMode ? "Edit task" : "Add Task"}
             </Button>
         </Modal.Footer>
     </Modal>
@@ -134,4 +142,4 @@ const AddNewTaskPopup = ({onClose, refetch}) => {
 }
 
 
-export default AddNewTaskPopup
+export default AddEditTaskPopup;

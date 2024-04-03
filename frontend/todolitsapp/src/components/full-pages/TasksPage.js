@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import DeleteTaskPopup from './DeleteTaskPopup';
-import AddNewTaskPopup from './AddNewTaskPopup';
-import { useGetAllTasksQuery } from '../api/taskApi';
-import TasksList from './TasksList';
-import TasksGrid from './TasksGrid';
-import FinishedTasksList from './FinishedTasksList';
+import DeleteTaskPopup from '../popups/DeleteTaskPopup';
+import AddEditTaskPopup from '../popups/AddEditTaskPopup';
+import { useGetAllTasksQuery } from '../../api/taskApi';
+import TasksList from '../TasksList';
+import TasksGrid from '../TasksGrid';
+import FinishedTasksList from '../FinishedTasksList';
 
 
 const TasksPage = () => {
     const [showDeleteTaskPopup, setShowDeleteTaskPopup] = useState(false);
     const [showAddTaskPopup, setShowAddTaskPopup] = useState(false);
+    const [showEditTaskPopup, setShowEditTaskPopup] = useState(false);
     const [taskToDeleteId, setTaskToDeleteId] = useState(null);
     const [isChecked, setIsChecked] = useState(false);
+    const [taskToEdit, setTaskToEdit] = useState({});
 
     const {data: tasks, isSuccess: allTasksSuccess, refetch: refetchAllTasks} = useGetAllTasksQuery() || [];
 
@@ -23,6 +25,11 @@ const TasksPage = () => {
     const toggleAddTaskPopup = () => {
         setShowAddTaskPopup(!showAddTaskPopup);
     };
+
+    const toggleEditTaskPopup = (task) => {
+        setTaskToEdit(task);
+        setShowEditTaskPopup(!showEditTaskPopup);
+    }
 
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
@@ -53,6 +60,7 @@ const TasksPage = () => {
             :   <TasksList
                     tasks={toDoTasks}
                     toggleDeleteTaskPopup={toggleDeleteTaskPopup}
+                    toggleEditTaskPopup={toggleEditTaskPopup}
                     allTasksSuccess={allTasksSuccess}
                 />
                 
@@ -75,13 +83,20 @@ const TasksPage = () => {
           />
         )}
         { showAddTaskPopup && (
-            <AddNewTaskPopup 
+            <AddEditTaskPopup 
                 onClose={toggleAddTaskPopup}
                 refetch={refetchAllTasks}
             />
         )}
 
-
+        { showEditTaskPopup && (
+            <AddEditTaskPopup 
+                onClose={toggleEditTaskPopup}
+                refetch={refetchAllTasks}
+                isEditMode={true}
+                taskToEdit={taskToEdit}
+            />
+        )}
 
     </div>
   )

@@ -8,6 +8,7 @@ const Layout = () => {
             <main className="app-body">
                 <Outlet />
             </main>
+
         </>
     )
 }

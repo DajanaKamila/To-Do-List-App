@@ -3,7 +3,7 @@ import  { useAddNewTaskMutation, useUpdateTaskMutation } from '../../api/taskApi
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useGetAllPrioritiesQuery } from '../../api/priorityApi'; 
 
 const AddEditTaskPopup = ({onClose, refetch, isEditMode, taskToEdit }) => {
@@ -46,18 +46,16 @@ const AddEditTaskPopup = ({onClose, refetch, isEditMode, taskToEdit }) => {
 
           if ( isEditMode ) {
             newTask.id = taskToEdit.id
-
             await editTask(newTask).unwrap();
           } else {
-          // const response = await addNewTask(newTask).unwrap();
-          await addNewTask(newTask).unwrap();
-          // toast.success("Task added successfully!");
+            await addNewTask(newTask).unwrap();
+            toast.success("Task added successfully!");
           }
-          refetch();
+          await refetch();
           onClose();
         } catch (error) {
           console.error('Error adding task: ', error);
-          // toast.error("Upss! Something went wrong. " + error);
+          toast.error("Upss! Something went wrong. " + error);
         }
       };
 

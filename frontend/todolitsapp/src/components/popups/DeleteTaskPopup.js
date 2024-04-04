@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useDeleteTaskByIdMutation } from '../../api/taskApi';
+import { toast } from "react-toastify";
 
 const DeleteTaskPopup = ({taskId, onClose, refetch}) => {
     const showModal = true;
@@ -10,10 +11,12 @@ const DeleteTaskPopup = ({taskId, onClose, refetch}) => {
     const handleDelete = async () => {
         try {
           await deleteTaskById(taskId);
+          toast.success("Task deleted successfully!");
           await refetch();
           onClose();
         } catch (error) {
           console.error("Error deleting task: ", error);
+          toast.error("Upss! Something went wrong. " + error);
         }
       };
 

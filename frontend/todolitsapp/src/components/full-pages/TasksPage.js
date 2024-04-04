@@ -93,6 +93,8 @@ const TasksPage = () => {
             handleCheckboxChange={handleCheckboxChange}
         />
 
+        <div className="gap"/>
+
 
         {showDeleteTaskPopup && (
           <DeleteTaskPopup

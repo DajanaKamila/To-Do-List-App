@@ -1,9 +1,11 @@
 package myprojects.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import myprojects.model.Task;
@@ -40,5 +42,11 @@ public class TaskService {
 		return this.taskRepo.save(task);
 	}
 	
+	@Scheduled(fixedRate = 86400000) //24h
+    public void deleteTasksOlderThanSevenDays() {
+        LocalDate dateSevenDaysAgo = LocalDate.now().minusDays(7);
+        List<Task> oldTasks = taskRepo.findByCompletionDateBeforeAndIsFinishedTrue(dateSevenDaysAgo);
+        taskRepo.deleteAll(oldTasks);
+    }
 
 }

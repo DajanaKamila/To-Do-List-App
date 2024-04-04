@@ -1,7 +1,7 @@
 /* General leyout */
 
 .header {
-    background-color: #FFF0F5;
+    background-color: #FFB6C1;
     padding: 10px;
     margin-right: 5%;
     margin-left: 5%;
@@ -98,12 +98,12 @@
 } 
 
 .btn-custom {
-        min-width: 180px;
-        max-height: 40px;
-        background-color: #FFB6C1 !important;
-        font-weight: bold !important; 
-        border-color: #FFB6C1 !important;
-        color: #333 !important;
+    min-width: 180px;
+    max-height: 40px;
+    background-color: #FFB6C1 !important;
+    font-weight: bold !important; 
+    border-color: #FFB6C1 !important;
+    color: #333 !important;
 }
 
 .btn-custom:hover{
@@ -116,3 +116,34 @@
     margin-bottom: 30px;
 }
 
+/* Badges */
+.custom-bg-high-urgent {
+    background-color:#FF6347;
+}
+
+.custom-bg-high-not-urgent {
+    background-color: #9ACD32;
+}
+
+.custom-bg-low-urgent {
+    background-color: #FFD700;
+}
+
+.custom-bg-low-not-urgent {
+    background-color: #6495ED;
+}
+
+.deadline-danger {
+    color: #FF6347;
+    font-weight: bold;
+}
+
+.deadline-warning {
+    color: #FFD700;
+    font-weight: bold;
+}
+
+.deadline-calm {
+    color: #6495ED;
+    font-weight: bold;
+}

@@ -13,9 +13,9 @@ const AddEditTaskPopup = ({onClose, refetch, isEditMode, taskToEdit }) => {
     const { data: priorities, isSuccess: prioritySuccess} = useGetAllPrioritiesQuery();
 
     const [title, setTitle] = useState(isEditMode ? taskToEdit.title : '');
-    const [details, setDetails] = useState(isEditMode ? taskToEdit.description : ' ');
-    const [priority, setPriority] = useState(isEditMode ? taskToEdit.priority : ' ');
-    const [deadline, setDeadline] = useState(isEditMode ? taskToEdit.deadline : ' ');
+    const [details, setDetails] = useState(isEditMode ? taskToEdit.description : '');
+    const [priority, setPriority] = useState(isEditMode ? taskToEdit.priority : '');
+    const [deadline, setDeadline] = useState(isEditMode ? taskToEdit.deadline : '');
     const [errors, setErrors] = useState({});
 
     const validateForm = () => {

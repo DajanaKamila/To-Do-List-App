@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DeleteTaskPopup from '../popups/DeleteTaskPopup';
 import AddEditTaskPopup from '../popups/AddEditTaskPopup';
-import { useGetAllTasksQuery } from '../../api/taskApi';
+import { useGetAllTasksQuery, useUpdateTaskMutation } from '../../api/taskApi';
 import TasksList from '../TasksList';
 import TasksGrid from '../TasksGrid';
 import FinishedTasksList from '../FinishedTasksList';
@@ -15,6 +15,7 @@ const TasksPage = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [taskToEdit, setTaskToEdit] = useState({});
 
+    const [updateTaskMutation] = useUpdateTaskMutation();
     const {data: tasks, isSuccess: allTasksSuccess, refetch: refetchAllTasks} = useGetAllTasksQuery() || [];
 
     const toggleDeleteTaskPopup = (id) => {
@@ -31,13 +32,27 @@ const TasksPage = () => {
         setShowEditTaskPopup(!showEditTaskPopup);
     }
 
-    const handleCheckboxChange = (e) => {
-        setIsChecked(e.target.checked);
+    const handleCheckboxChange = async (task) => {
+        const updatedTask = {
+            ...task,
+            finished: !task.finished,
+            completionDate: task.finished ? null : new Date().toISOString()
+        };
+
+        await updateTaskMutation(updatedTask);
+        refetchAllTasks();
     };
 
-    const toDoTasks = tasks && tasks.filter(task => !task.finished);
-    const finishedAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
+    let toDoTasks = tasks && tasks.filter(task => !task.finished);
+    let finishedAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
 
+
+    useEffect(() => {
+        if (tasks) {
+            toDoTasks = tasks && tasks.filter(task => !task.finished);
+            finishedAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
+        }
+    }, [tasks, updateTaskMutation]);
 
   return (
     <div className="tasks-page">
@@ -49,7 +64,8 @@ const TasksPage = () => {
                             value="" 
                             id="flexCheckDefault" 
                             checked={isChecked} 
-                            onChange={handleCheckboxChange} />
+                            onChange={() => setIsChecked(!isChecked)}
+                    />
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         Grid view
                     </label>
@@ -62,6 +78,8 @@ const TasksPage = () => {
                     toggleDeleteTaskPopup={toggleDeleteTaskPopup}
                     toggleEditTaskPopup={toggleEditTaskPopup}
                     allTasksSuccess={allTasksSuccess}
+                    refetch={refetchAllTasks}
+                    handleCheckboxChange={handleCheckboxChange}
                 />
                 
         }
@@ -72,6 +90,7 @@ const TasksPage = () => {
             tasks={finishedAndSortedTasks }
             toggleDeleteTaskPopup={toggleDeleteTaskPopup}
             allTasksSuccess={allTasksSuccess}
+            handleCheckboxChange={handleCheckboxChange}
         />
 
 

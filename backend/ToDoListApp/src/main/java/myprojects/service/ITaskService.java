@@ -18,6 +18,6 @@ public interface ITaskService {
 
 	void deleteById(Long id);
 
-	Task updateById(Task task);
+	Task update(Task task);
 
 }

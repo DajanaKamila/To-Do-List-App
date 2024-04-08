@@ -56,8 +56,7 @@ public class TaskService implements ITaskService {
 	 */
 	@Override
 	public Task getById(Long id) {
-		return this.taskRepo.findById(id)
-				.orElseThrow(() -> new TaskNotFoundException("Task with the given ID was not found."));
+		return this.taskRepo.findById(id).orElse(null);
 	}
 
 	/**
@@ -78,13 +77,12 @@ public class TaskService implements ITaskService {
 	 * @throws TaskNotFoundException - if task with the given ID was not found 
 	 */
 	@Override
-	public Task updateById(Task task) {
-		Task taskToBeUpdated = taskRepo.findById(task.getId()).orElse(null);
-		if (taskToBeUpdated == null) {
-			throw new TaskNotFoundException("Failed to update task. Task with the given ID was not found.");
-		} else {
-			return this.taskRepo.save(task);
-		}
+	public Task update(Task task) {
+        Long taskId = task.getId();
+        if (taskId == null || !taskRepo.existsById(taskId)) {
+            throw new TaskNotFoundException("Task with the given ID was not found.");
+        }
+        return taskRepo.save(task);
 	}
 
 	 /**

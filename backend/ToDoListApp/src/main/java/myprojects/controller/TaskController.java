@@ -59,9 +59,6 @@ public class TaskController {
 	@GetMapping("/")
 	public ResponseEntity<?> getAll() {
 		List<Task> tasks = this.taskService.getAll();
-		if (tasks == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}	
 		return new ResponseEntity<>(tasks, HttpStatus.OK);
 	}
 	
@@ -109,12 +106,12 @@ public class TaskController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Task successfully updated."),
 			@ApiResponse(responseCode = "404", description = "Task not found.")})
 	@PutMapping("/")
-	public ResponseEntity<?> updateById(@RequestBody Task task) {
+	public ResponseEntity<?> update(@RequestBody Task task) {
 		Task taskDB = this.taskService.getById(task.getId());
 		if (taskDB == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(this.taskService.updateById(task), HttpStatus.OK);
+		return new ResponseEntity<>(this.taskService.update(task), HttpStatus.OK);
 	} 
 	
 }

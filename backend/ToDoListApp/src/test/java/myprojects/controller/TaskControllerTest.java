@@ -152,21 +152,21 @@ public class TaskControllerTest {
     }
 
 	
-//	@Test
-//	@DisplayName("Update task - correct task")
-//	void test_updateTask_returnsUpdatedTask() throws JsonProcessingException, Exception {
-//		when(mockTaskService.getById(1L)).thenReturn(task);
-//		when(mockTaskService.update(task)).thenReturn(task);
-//		
-//		ResultActions response = mockMvc.perform(put("/api/v1/tasks/")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(task)));
-//		
-//		response.andExpect(status().isOk());
-//		
-//        verify(mockTaskService, times(1)).getById(1L);
-//        verify(mockTaskService, times(1)).update(task);
-//	}
+	@Test
+	@DisplayName("Update task - correct task")
+	void test_updateTask_returnsUpdatedTask() throws JsonProcessingException, Exception {
+		when(mockTaskService.getById(1L)).thenReturn(task);
+		when(mockTaskService.update(task)).thenReturn(task);
+		
+		ResultActions response = mockMvc.perform(put("/api/v1/tasks/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(task)));
+		
+		response.andExpect(status().isOk());
+		
+        verify(mockTaskService, times(1)).getById(1L);
+        verify(mockTaskService, times(1)).update(task);
+	}
 	
 	@Test
 	@DisplayName("Update task - incorrect task")

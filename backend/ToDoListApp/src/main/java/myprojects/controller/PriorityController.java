@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,9 +34,13 @@ public class PriorityController {
         @ApiResponse(responseCode = "204", description = "No content. There are no priorities available.")
     })
 	@GetMapping("/")
-	public List<EPriority> getPriorities() {
+	public ResponseEntity<?> getPriorities() {
 		List<EPriority> priorities = Arrays.stream(EPriority.values()).collect(Collectors.toList());
-		return priorities;
+	    if (priorities.isEmpty()) {
+	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    } else {
+	    	return new ResponseEntity<>(priorities, HttpStatus.OK);
+	    }
 	}
 
 }

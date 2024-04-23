@@ -1,11 +1,11 @@
 import React from 'react'
 import { BsFillTrash3Fill} from "react-icons/bs";
-import { getPriorityInfo, getDeadlineStyle } from './TaskFormatingUtils';
+import { getPriorityInfo } from './TaskFormatingUtils';
 
 const FinishedTasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess, handleCheckboxChange}) => {
   return (
     <div className="table-wrapper">
-        <table className="table-all-tasks finished">
+        <table className="table-all-tasks basic finished">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -17,7 +17,14 @@ const FinishedTasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess, handl
                 </tr>
             </thead>
             <tbody>
-                {allTasksSuccess && tasks.map((task) => (
+                {allTasksSuccess && tasks.length === 0 && (
+                <tr>
+                <td colSpan="5" style={{ textAlign: 'center' }}>
+                    No tasks available
+                </td>
+                </tr>
+                )}
+                {allTasksSuccess && tasks.length > 0 && tasks.map((task) => (
                     <tr key={task.id}>
                         <td className="checkbox-column">
                                 <input 

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import DeleteTaskPopup from '../popups/DeleteTaskPopup';
 import AddEditTaskPopup from '../popups/AddEditTaskPopup';
 import { useGetAllTasksQuery, useUpdateTaskMutation } from '../../api/taskApi';
-import TasksList from '../TasksList';
-import TasksGrid from '../TasksGrid';
-import FinishedTasksList from '../FinishedTasksList';
+import TasksTable from '../tasks-tables/TasksTable';
+import TasksGrid from '../tasks-tables/TasksGrid';
+import FinishedTasksTable from '../tasks-tables/FinishedTasksTable';
 
 
 const TasksPage = () => {
@@ -12,8 +12,10 @@ const TasksPage = () => {
     const [showAddTaskPopup, setShowAddTaskPopup] = useState(false);
     const [showEditTaskPopup, setShowEditTaskPopup] = useState(false);
     const [taskToDeleteId, setTaskToDeleteId] = useState(null);
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(localStorage.getItem('isChecked') === 'true');;
     const [taskToEdit, setTaskToEdit] = useState({});
+    const [toDoTasks, setToDoTasks] = useState([]);
+    const [finishedAndSortedTasks, setFinishedAndSortedTasks] = useState([]);
 
     const [updateTaskMutation] = useUpdateTaskMutation();
     const {data: tasks, isSuccess: allTasksSuccess, refetch: refetchAllTasks} = useGetAllTasksQuery() || [];
@@ -43,16 +45,18 @@ const TasksPage = () => {
         refetchAllTasks();
     };
 
-    let toDoTasks = tasks && tasks.filter(task => !task.finished);
-    let finishedAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
-
-
     useEffect(() => {
         if (tasks) {
-            toDoTasks = tasks && tasks.filter(task => !task.finished);
-            finishedAndSortedTasks = tasks && tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate)); 
+            const toDo = tasks.filter(task => !task.finished);
+            const finishedSorted = tasks.filter(task => task.completionDate !== null).sort((a, b) => new Date(b.completionDate) - new Date(a.completionDate));
+            setToDoTasks(toDo);
+            setFinishedAndSortedTasks(finishedSorted);
         }
     }, [tasks, updateTaskMutation]);
+
+    useEffect(() => {
+        localStorage.setItem('isChecked', isChecked);
+    }, [isChecked]);
 
   return (
     <div className="tasks-page">
@@ -72,21 +76,29 @@ const TasksPage = () => {
                 </div>
         </div>
 
-        {isChecked ? <TasksGrid/>
-            :   <TasksList
-                    tasks={toDoTasks}
-                    toggleDeleteTaskPopup={toggleDeleteTaskPopup}
-                    toggleEditTaskPopup={toggleEditTaskPopup}
-                    allTasksSuccess={allTasksSuccess}
-                    refetch={refetchAllTasks}
-                    handleCheckboxChange={handleCheckboxChange}
-                />
+        {isChecked ? <TasksGrid
+                            tasks={toDoTasks}
+                            toggleDeleteTaskPopup={toggleDeleteTaskPopup}
+                            toggleEditTaskPopup={toggleEditTaskPopup}
+                            allTasksSuccess={allTasksSuccess}
+                            handleCheckboxChange={handleCheckboxChange}
+                            isFullView={false}
+                    />
+                :   <TasksTable
+                        tasks={toDoTasks}
+                        toggleDeleteTaskPopup={toggleDeleteTaskPopup}
+                        toggleEditTaskPopup={toggleEditTaskPopup}
+                        allTasksSuccess={allTasksSuccess}
+                        handleCheckboxChange={handleCheckboxChange}
+                        thStyle="basic"
+                        isFullView={true}
+                    />
                 
         }
 
         <div className="gap"/>
 
-        <FinishedTasksList 
+        <FinishedTasksTable 
             tasks={finishedAndSortedTasks }
             toggleDeleteTaskPopup={toggleDeleteTaskPopup}
             allTasksSuccess={allTasksSuccess}

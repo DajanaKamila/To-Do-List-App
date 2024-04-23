@@ -42,11 +42,30 @@
 }
 
 .table-all-tasks th {
-    background-color: #00CED1; 
     font-family: 'Roboto', sans-serif; 
     font-weight: bold; 
     padding: 10px; 
     text-align: center; 
+}
+
+.table-all-tasks.basic th {
+    background-color: #00CED1; 
+}
+
+.table-all-tasks.high-urgent th {
+    background-color: #FF6347; 
+}
+
+.table-all-tasks.low-urgent th {
+    background-color: #FFD700; 
+}
+
+.table-all-tasks.low-not-urgent th {
+    background-color: #6495ED; 
+}
+
+.table-all-tasks.high-not-urgent th {
+    background-color: #9ACD32; 
 }
 
 .table-all-tasks td {
@@ -147,3 +166,5 @@
     color: #6495ED;
     font-weight: bold;
 }
+
+

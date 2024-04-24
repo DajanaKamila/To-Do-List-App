@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { BsFillTrash3Fill} from "react-icons/bs";
 import { getPriorityInfo } from './TaskFormatingUtils';
 
-const FinishedTasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess, handleCheckboxChange}) => {
+const FinishedTasksTable = ({tasks, toggleDeleteTaskPopup, allTasksSuccess, handleCheckboxChange}) => {
   return (
     <div className="table-wrapper">
         <table className="table-all-tasks basic finished">
@@ -35,7 +36,14 @@ const FinishedTasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess, handl
                                     onChange={() => handleCheckboxChange(task)}
                                     defaultChecked/>
                         </td>
-                        <td className="title-column" style={{ textDecoration: 'line-through', color: '#808080' }}>{task.title}</td>
+                        <td className="title-column" style={{ textDecoration: 'line-through', color: '#808080' }}>
+                            <Link
+                                to={`/${task.id}/details`}
+                                className="custom-link"
+                            >
+                                {task.title}
+                            </ Link>
+                        </td>
                         <td className="priority-column">
                             <span className={`badge badge-pill ${getPriorityInfo(task)}`}>
                             {task.priority}
@@ -56,4 +64,4 @@ const FinishedTasksList = ({tasks, toggleDeleteTaskPopup, allTasksSuccess, handl
   )
 }
 
-export default FinishedTasksList
+export default FinishedTasksTable

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BsFillTrash3Fill, BsFillPencilFill } from "react-icons/bs";
 import { getPriorityInfo, getDeadlineStyle } from './TaskFormatingUtils';
 
@@ -40,7 +41,14 @@ const TasksTable = ({tasks, toggleDeleteTaskPopup, toggleEditTaskPopup, allTasks
                           checked={task.isFinished}
                         />
                       </td>
-                      <td className="title-column">{task.title}</td>
+                      <td className="title-column">
+                        <Link
+                            to={`/${task.id}/details`}
+                            className="custom-link"
+                          >
+                            {task.title}
+                          </Link>
+                      </td>
                       {isFullView &&
                         <td className="priority-column">
                           <span className={`badge badge-pill ${getPriorityInfo(task)}`}>

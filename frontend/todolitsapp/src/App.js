@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
 import TasksPage from './components/full-pages/TasksPage';
+import TaskDetailsPage from './components/full-pages/TaskDetailsPage';
 import Layout from './components/layout/Layout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<TasksPage />}></Route>
+        <Route path=":id/details" element={<TaskDetailsPage />} />
       </Route>
     </Routes>
 

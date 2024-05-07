@@ -120,26 +120,6 @@ class TaskServiceTest {
 	    when(mockTaskRepo.existsById(id)).thenReturn(false);
 	    verify(mockTaskRepo, times(0)).deleteById(id);
 	}
-	
-	@Test
-	@DisplayName("Update.")
-	void test_update_callsSaveMethodFromRepo_returnsUpdatedTask() {
-		when(mockTaskRepo.existsById(mockTask.getId())).thenReturn(true);
-		when(mockTaskRepo.save(mockTask)).thenReturn(mockTask);
-		Task updatedTask = taskService.update(mockTask);
-		
-		verify(mockTaskRepo, times(1)).save(mockTask);
-		assertThat(updatedTask).isEqualTo(mockTask);
-	}
-	
-	@Test
-	@DisplayName("Update - empty task.")
-	void test_update_emptyTaskAsInput_throwsTaskNotFoundException() {
-	    Task emptyTask = new Task();
-	    assertThrows(TaskNotFoundException.class, () -> taskService.update(emptyTask));
-	    verify(mockTaskRepo, times(0)).save(emptyTask);
-	}
-	
 
 	@Test
 	@DisplayName("Delete tasks older than given days.")

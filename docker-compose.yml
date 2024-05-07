@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: todolistapp
+      MYSQL_PASSWORD: admin
+    networks:
+      - spring_net
+
+  backend:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      ports:
+        - "9090:9090"
+      depends_on:
+        - mysql
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://172.23.0.2:3306/todolistapp?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: admin
+      networks:
+        - spring_net
+
+  frontend:
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      ports:
+        - "3000:80"
+      networks:
+        - frontend_net
+
+networks:
+  spring_net:
+  frontend_net:
